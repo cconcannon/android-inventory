@@ -7,4 +7,6 @@
     <string name="quantity">Quantity</string>
     <string name="select">Select</string>
     <string name="add_item">Add Item to Inventory</string>
+    <string name="item_details">Inventory Item Details</string>
+    <string name="increment">Increment</string>
 </resources>

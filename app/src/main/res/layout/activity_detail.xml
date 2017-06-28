@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.vn0mrky.inventory.DetailActivity">
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/edit_text_margin"
+        android:layout_alignParentTop="true"
+        android:textAlignment="left"
+        android:text="@string/item_name"
+        android:textStyle="bold"
+        android:textSize="@dimen/medium_large_text"/>
+
+    <TextView
+        android:id="@+id/item_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_name"
+        android:layout_margin="@dimen/edit_text_margin"
+        android:text="@string/item_description"
+        android:textSize="@dimen/medium_large_text"/>
+
+    <ImageView
+        android:id="@+id/item_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_description"
+        android:layout_margin="@dimen/edit_text_margin"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_picture">
+
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:text="@string/quantity"
+            android:textSize="@dimen/medium_large_text"
+            android:layout_margin="@dimen/edit_text_margin"/>
+
+        <Button
+            android:id="@+id/quantity_button_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/quantity"
+            android:text="-"
+            style="?android:attr/buttonStyleSmall"/>
+
+        <TextView
+            android:id="@+id/quantity_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/quantity"
+            android:layout_toRightOf="@+id/quantity_button_remove"
+            android:layout_margin="@dimen/edit_text_margin"
+            android:text="1"
+            android:textSize="@dimen/medium_large_text"/>
+
+        <Button
+            android:id="@+id/quantity_button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/quantity_number"
+            android:text="+"
+            style="?android:attr/buttonStyleSmall"/>
+
+        <TextView
+            android:id="@+id/increment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/increment_input"
+            android:layout_alignBaseline="@id/quantity_number"
+            android:text="@string/increment"
+            android:textSize="@dimen/medium_large_text"/>
+
+        <EditText
+            android:id="@+id/increment_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/edit_text_margin"
+            android:layout_alignBaseline="@id/quantity"
+            android:text="1"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -21,7 +21,10 @@
         </activity>
         <activity
             android:name=".AddItemActivity"
-            android:label="@string/add_item">
+            android:label="@string/add_item"></activity>
+        <activity
+            android:name=".DetailActivity"
+            android:label="@string/item_details">
 
         </activity>
     </application>
