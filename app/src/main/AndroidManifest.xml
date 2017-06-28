@@ -19,7 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddItemActivity"></activity>
+        <activity
+            android:name=".AddItemActivity"
+            android:label="@string/add_item">
+
+        </activity>
     </application>
 
 </manifest>
