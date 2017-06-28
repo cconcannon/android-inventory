@@ -9,4 +9,5 @@
     <string name="add_item">Add Item to Inventory</string>
     <string name="item_details">Inventory Item Details</string>
     <string name="increment">Increment</string>
+    <string name="item_price">Item Price</string>
 </resources>

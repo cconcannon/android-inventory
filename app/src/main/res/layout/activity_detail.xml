@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/edit_text_margin"
         android:layout_alignParentTop="true"
-        android:textAlignment="left"
         android:text="@string/item_name"
         android:textStyle="bold"
         android:textSize="@dimen/medium_large_text"/>
@@ -27,11 +26,20 @@
         android:text="@string/item_description"
         android:textSize="@dimen/medium_large_text"/>
 
+    <TextView
+        android:id="@+id/item_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_description"
+        android:layout_margin="@dimen/edit_text_margin"
+        android:text="@string/item_price"
+        android:textSize="@dimen/medium_large_text"/>
+
     <ImageView
         android:id="@+id/item_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_description"
+        android:layout_below="@id/item_price"
         android:layout_margin="@dimen/edit_text_margin"/>
 
     <RelativeLayout
@@ -75,15 +83,6 @@
             android:text="+"
             style="?android:attr/buttonStyleSmall"/>
 
-        <TextView
-            android:id="@+id/increment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/increment_input"
-            android:layout_alignBaseline="@id/quantity_number"
-            android:text="@string/increment"
-            android:textSize="@dimen/medium_large_text"/>
-
         <EditText
             android:id="@+id/increment_input"
             android:layout_width="wrap_content"
@@ -92,6 +91,15 @@
             android:layout_margin="@dimen/edit_text_margin"
             android:layout_alignBaseline="@id/quantity"
             android:text="1"/>
+
+        <TextView
+            android:id="@+id/increment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/increment_input"
+            android:layout_alignBaseline="@id/quantity_number"
+            android:text="@string/increment"
+            android:textSize="@dimen/medium_large_text"/>
 
     </RelativeLayout>
 

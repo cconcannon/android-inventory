@@ -7,8 +7,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.vn0mrky.inventory.InventoryActivity">
 
-    <TextView
-        android:id="@+id/inventory_contents"
+    <ListView
+        android:id="@+id/inventory_list"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/activity_margin"/>
