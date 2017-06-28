@@ -27,6 +27,7 @@
             android:hint="@string/item_description"/>
 
         <RelativeLayout
+            android:id="@+id/quantity_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -50,8 +51,34 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/price_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/quantity_layout">
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/edit_text_margin"
+                android:text="@string/item_price"
+                android:textSize="@dimen/medium_large_text"/>
+
+            <EditText
+                android:id="@+id/price_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/edit_text_margin"
+                android:layout_toRightOf="@id/price"
+                android:layout_alignBaseline="@id/price"
+                android:hint="0.00"
+                android:inputType="numberDecimal"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/price_layout">
 
             <LinearLayout
                 android:id="@+id/upload_section"
