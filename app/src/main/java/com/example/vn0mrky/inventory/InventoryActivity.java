@@ -1,6 +1,8 @@
 package com.example.vn0mrky.inventory;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,7 +12,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.vn0mrky.inventory.data.InventoryContract.InventoryEntry;
+import com.example.vn0mrky.inventory.data.InventoryDbHelper;
+
+
 public class InventoryActivity extends AppCompatActivity {
+
+    private InventoryDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +55,15 @@ public class InventoryActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void insertItem() {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(InventoryEntry.COLUMN_ITEM_NAME, "Hoka One One Tracer");
+        values.put(InventoryEntry.COLUMN_ITEM_DESCRIPTION, "A lightweight, yet full-cushioned road running shoe");
+        values.put(InventoryEntry.COLUMN_ITEM_QUANTITY, 1);
+
+        long newRowId = db.insert(InventoryEntry.TABLE_NAME, null, values);
     }
 }
