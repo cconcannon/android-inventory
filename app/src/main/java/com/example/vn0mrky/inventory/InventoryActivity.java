@@ -22,6 +22,7 @@ import com.example.vn0mrky.inventory.data.InventoryDbHelper;
 public class InventoryActivity extends AppCompatActivity {
 
     private InventoryDbHelper mDbHelper;
+    InventoryCursorAdapter mCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class InventoryActivity extends AppCompatActivity {
         View emptyView = findViewById(R.id.empty_view);
         inventoryListView.setEmptyView(emptyView);
 
+        mCursorAdapter = new InventoryCursorAdapter(this, null);
+        inventoryListView.setAdapter(mCursorAdapter);
 
         mDbHelper = new InventoryDbHelper(this);
     }
