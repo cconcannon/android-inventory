@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.vn0mrky.inventory.data.InventoryContract.InventoryEntry;
@@ -36,6 +37,11 @@ public class InventoryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ListView inventoryListView = (ListView) findViewById(R.id.inventory_list);
+        View emptyView = findViewById(R.id.empty_view);
+        inventoryListView.setEmptyView(emptyView);
+
 
         mDbHelper = new InventoryDbHelper(this);
     }
