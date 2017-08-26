@@ -1,7 +1,11 @@
 package com.example.vn0mrky.inventory;
 
+import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +23,8 @@ import com.example.vn0mrky.inventory.data.InventoryContract.InventoryEntry;
 import com.example.vn0mrky.inventory.data.InventoryDbHelper;
 
 
-public class InventoryActivity extends AppCompatActivity {
+public class InventoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+    private static final int INVENTORY_LOADER = 0;
 
     private InventoryDbHelper mDbHelper;
     InventoryCursorAdapter mCursorAdapter;
@@ -47,6 +52,8 @@ public class InventoryActivity extends AppCompatActivity {
         inventoryListView.setAdapter(mCursorAdapter);
 
         mDbHelper = new InventoryDbHelper(this);
+
+        getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
     }
 
     @Override
@@ -81,5 +88,33 @@ public class InventoryActivity extends AppCompatActivity {
         long newRowId = db.insert(InventoryEntry.TABLE_NAME, null, values);
         Log.i("row ID:", Long.toString(newRowId));
         Toast.makeText(this, "Row ID: " + Long.toString(newRowId), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        String[] projection = {
+                InventoryEntry._ID,
+                InventoryEntry.COLUMN_ITEM_NAME,
+                InventoryEntry.COLUMN_ITEM_QUANTITY,
+                InventoryEntry.COLUMN_ITEM_DESCRIPTION
+        };
+
+        return new CursorLoader(this,
+                InventoryEntry.CONTENT_URI,
+                projection,
+                null,
+                null,
+                null
+        );
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        mCursorAdapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mCursorAdapter.swapCursor(null);
     }
 }
