@@ -22,9 +22,12 @@ import android.widget.Toast;
 import com.example.vn0mrky.inventory.data.InventoryContract.InventoryEntry;
 import com.example.vn0mrky.inventory.data.InventoryDbHelper;
 
+import static com.example.vn0mrky.inventory.data.InventoryDbHelper.LOG_TAG;
+
 
 public class InventoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int INVENTORY_LOADER = 0;
+    private static final String LOG_TAG = InventoryActivity.class.getSimpleName();
 
     private InventoryDbHelper mDbHelper;
     InventoryCursorAdapter mCursorAdapter;
@@ -65,14 +68,14 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_insert_dummy_data:
+                insertItem();
+                return true;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            case R.id.action_delete_all_entries:
+                deleteInventory();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -88,6 +91,12 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         long newRowId = db.insert(InventoryEntry.TABLE_NAME, null, values);
         Log.i("row ID:", Long.toString(newRowId));
         Toast.makeText(this, "Row ID: " + Long.toString(newRowId), Toast.LENGTH_SHORT).show();
+    }
+
+    private void deleteInventory() {
+        int rowsDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, null, null);
+        Log.v(LOG_TAG, rowsDeleted + " rows deleted from Inventory app database");
+        Toast.makeText(this, "@string/deleted_all", Toast.LENGTH_SHORT);
     }
 
     @Override
