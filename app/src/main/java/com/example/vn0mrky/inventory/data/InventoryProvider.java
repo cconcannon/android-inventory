@@ -62,8 +62,16 @@ public class InventoryProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public String getType(@NonNull Uri uri) {
-        return null;
+    public String getType(Uri uri) {
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case INVENTORY:
+                return InventoryContract.InventoryEntry.CONTENT_LIST_TYPE;
+            case ITEM_ID:
+                return InventoryContract.InventoryEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+        }
     }
 
     @Nullable
@@ -102,12 +110,77 @@ public class InventoryProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int rowsDeleted;
+
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case INVENTORY:
+                rowsDeleted = database.delete(InventoryContract.InventoryEntry.TABLE_NAME, selection, selectionArgs);
+            case ITEM_ID:
+                selection = InventoryContract.InventoryEntry._ID + "=?";
+                selectionArgs = new String[] {
+                        String.valueOf(ContentUris.parseId(uri))
+                };
+                rowsDeleted = database.delete(InventoryContract.InventoryEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
+        }
+
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return rowsDeleted;
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case INVENTORY:
+                return updateItem(uri, contentValues, selection, selectionArgs);
+            case ITEM_ID:
+                selection = InventoryContract.InventoryEntry._ID + "=?";
+                selectionArgs = new String[] {
+                        String.valueOf(ContentUris.parseId(uri))
+                };
+                return updateItem(uri, contentValues, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
+    }
+
+    private int updateItem(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
+        if (contentValues.containsKey(InventoryContract.InventoryEntry.COLUMN_ITEM_NAME)) {
+            String name = contentValues.getAsString(InventoryContract.InventoryEntry.COLUMN_ITEM_NAME);
+            if (name == null) {
+                throw new IllegalArgumentException("Item requires a name");
+            }
+        }
+
+        if (contentValues.containsKey(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY)) {
+            Integer quantity = contentValues.getAsInteger(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY);
+            if (quantity < 0) {
+                throw new IllegalArgumentException("Quantity cannot be a negative number");
+            }
+        }
+
+        if (contentValues.size() == 0) {
+            return 0;
+        }
+
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int rowsUpdated = database.update(InventoryContract.InventoryEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return rowsUpdated;
     }
 }
