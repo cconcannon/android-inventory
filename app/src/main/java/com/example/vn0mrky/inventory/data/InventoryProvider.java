@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by cconcannon on 8/26/17.
@@ -67,8 +68,37 @@ public class InventoryProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-        return null;
+    public Uri insert(Uri uri, ContentValues contentValues) {
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case INVENTORY:
+                return insertItem(uri, contentValues);
+            default:
+                throw new IllegalArgumentException("Insertion is not supported for " + uri);
+        }
+    }
+
+    private Uri insertItem(Uri uri, ContentValues contentValues) {
+        String name = contentValues.getAsString(InventoryContract.InventoryEntry.COLUMN_ITEM_NAME);
+        if (name == null) {
+            throw new IllegalArgumentException("Item requires a name");
+        }
+
+        Integer quantity = contentValues.getAsInteger(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY);
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be a negative number");
+        }
+
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        long id = database.insert(InventoryContract.InventoryEntry.TABLE_NAME, null, contentValues);
+        if (id == -1) {
+            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+            return null;
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return ContentUris.withAppendedId(uri, id);
     }
 
     @Override

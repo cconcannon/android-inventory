@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".InventoryActivity"
             android:label="@string/app_name"
@@ -26,7 +26,7 @@
             android:label="@string/item_details">
         </activity>
         <provider
-            android:authorities="com.example.android.android-inventory"
+            android:authorities="com.example.android.inventory"
             android:name=".data.InventoryProvider"
             android:exported="false"/>
     </application>
