@@ -10,4 +10,10 @@
     <string name="item_details">Inventory Item Details</string>
     <string name="increment">Increment</string>
     <string name="item_price">Item Price</string>
+    <string name="inventory_is_empty">Inventory is Empty!</string>
+    <string name="add_item_instructions">To add an item to the inventory, click the button with the plus symbol on the bottom-right of this screen. Fill in the required information, save the entry, and the item will be added to your inventory. Items can be edited by clicking on their name from the main Inventory list.</string>
+    <string name="sale">Sold!</string>
+    <string name="insert_dummy_data">Insert Dummy Data</string>
+    <string name="delete_all">Delete All Entries</string>
+    <string name="deleted_all">Deleted ALL Entries</string>
 </resources>
