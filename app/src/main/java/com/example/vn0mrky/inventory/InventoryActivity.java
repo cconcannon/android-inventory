@@ -41,7 +41,6 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insertItem();
                 Intent intent = new Intent(InventoryActivity.this, AddItemActivity.class);
                 startActivity(intent);
             }
@@ -70,7 +69,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_insert_dummy_data:
-                insertItem();
+                insertDummyItem();
                 return true;
 
             case R.id.action_delete_all_entries:
@@ -81,7 +80,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         return super.onOptionsItemSelected(item);
     }
 
-    private void insertItem() {
+    private void insertDummyItem() {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(InventoryEntry.COLUMN_ITEM_NAME, "Hoka One One Tracer");
@@ -97,7 +96,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
     private void deleteInventory() {
         int rowsDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, null, null);
         Log.v(LOG_TAG, rowsDeleted + " rows deleted from Inventory app database");
-        Toast.makeText(this, "@string/deleted_all", Toast.LENGTH_SHORT);
+        Toast.makeText(this, R.string.deleted_all, Toast.LENGTH_SHORT);
     }
 
     @Override

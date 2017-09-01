@@ -101,7 +101,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     style="?android:attr/buttonStyle"
-                    android:text="@string/select"/>
+                    android:text="@string/select"
+                    android:onClick="insertItem()"/>
             </LinearLayout>
 
             <ImageView

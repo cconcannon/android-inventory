@@ -16,4 +16,6 @@
     <string name="insert_dummy_data">Insert Dummy Data</string>
     <string name="delete_all">Delete All Entries</string>
     <string name="deleted_all">Deleted ALL Entries</string>
+    <string name="successful_entry">Successful addition to Inventory</string>
+    <string name="data_error">Error, data not saved</string>
 </resources>
