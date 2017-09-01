@@ -87,6 +87,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         values.put(InventoryEntry.COLUMN_ITEM_NAME, "Hoka One One Tracer");
         values.put(InventoryEntry.COLUMN_ITEM_DESCRIPTION, "A lightweight, yet full-cushioned road running shoe");
         values.put(InventoryEntry.COLUMN_ITEM_QUANTITY, 1);
+        values.put(InventoryEntry.COLUMN_ITEM_PRICE, 199);
 
         long newRowId = db.insert(InventoryEntry.TABLE_NAME, null, values);
         Log.i("row ID:", Long.toString(newRowId));
@@ -105,7 +106,8 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
                 InventoryEntry._ID,
                 InventoryEntry.COLUMN_ITEM_NAME,
                 InventoryEntry.COLUMN_ITEM_QUANTITY,
-                InventoryEntry.COLUMN_ITEM_DESCRIPTION
+                InventoryEntry.COLUMN_ITEM_DESCRIPTION,
+                InventoryEntry.COLUMN_ITEM_PRICE
         };
 
         return new CursorLoader(this,

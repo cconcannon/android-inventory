@@ -8,15 +8,17 @@ public class Item {
     private String mName;
     private String mDescription;
     private int mQuantity;
+    private int mPrice;
     private int mImageResourceId = NO_IMAGE_PROVIDED;
 
     private static final int NO_IMAGE_PROVIDED = -1;
 
-    public Item(String name, String description, int quantity, int imageResourceId) {
+    public Item(String name, String description, int quantity, int price, int imageResourceId) {
         mName = name;
         mDescription = description;
         mQuantity = quantity;
         mImageResourceId = imageResourceId;
+        mPrice = price;
     }
 
     public String getName() {
@@ -30,6 +32,8 @@ public class Item {
     public int getQuantity() {
         return mQuantity;
     }
+
+    public int getPrice() { return mPrice; }
 
     public int getImageResourceId() {
         return mImageResourceId;

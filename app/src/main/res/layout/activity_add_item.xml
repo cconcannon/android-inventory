@@ -32,7 +32,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/quantity"
+                android:id="@+id/quantity_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -42,9 +42,10 @@
                 android:layout_margin="@dimen/edit_text_margin"/>
 
             <EditText
+                android:id="@+id/quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/quantity"
+                android:layout_toRightOf="@id/quantity_label"
                 android:layout_alignBaseline="@id/quantity"
                 android:text="1"/>
 
