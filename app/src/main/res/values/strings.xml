@@ -18,4 +18,5 @@
     <string name="deleted_all">Deleted ALL Entries</string>
     <string name="successful_entry">Successful addition to Inventory</string>
     <string name="data_error">Error, data not saved</string>
+    <string name="order_more">Order More from Supplier!</string>
 </resources>

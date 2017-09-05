@@ -35,17 +35,11 @@
         android:text="@string/item_price"
         android:textSize="@dimen/medium_large_text"/>
 
-    <ImageView
-        android:id="@+id/item_picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/item_price"
-        android:layout_margin="@dimen/edit_text_margin"/>
-
     <RelativeLayout
+        android:id="@+id/quantity_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_picture">
+        android:layout_below="@id/item_price">
 
         <TextView
             android:id="@+id/quantity"
@@ -102,5 +96,13 @@
             android:textSize="@dimen/medium_large_text"/>
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/order_more_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quantity_layout"
+        android:layout_margin="@dimen/edit_text_margin"
+        android:text="@string/order_more"/>
 
 </RelativeLayout>

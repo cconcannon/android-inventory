@@ -41,7 +41,8 @@ public class AddItemActivity extends AppCompatActivity {
         String nameString = mNameEdit.getText().toString().trim();
         String descriptionString = mDescriptionEdit.getText().toString().trim();
         int quantity = Integer.parseInt(mQuantityEdit.getText().toString().trim());
-        int price = Integer.parseInt(mPriceEdit.getText().toString().trim());
+        float priceInput = Float.parseFloat(mPriceEdit.getText().toString().trim());
+        int price = Math.round(priceInput*100);
 
         InventoryDbHelper mDbHelper = new InventoryDbHelper(this);
 
