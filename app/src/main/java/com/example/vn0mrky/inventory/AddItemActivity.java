@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.net.Uri;
 
 import com.example.vn0mrky.inventory.data.InventoryContract;
 import com.example.vn0mrky.inventory.data.InventoryDbHelper;
@@ -54,8 +55,8 @@ public class AddItemActivity extends AppCompatActivity {
         values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY, quantity);
         values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE, price);
 
-        long newRowId = db.insert(InventoryContract.InventoryEntry.TABLE_NAME, null, values);
-        if (newRowId == -1) {
+        Uri newUri = getContentResolver().insert(InventoryContract.InventoryEntry.CONTENT_URI, values);
+        if (newUri == null) {
             Toast.makeText(this, R.string.data_error, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, R.string.successful_entry, Toast.LENGTH_SHORT).show();

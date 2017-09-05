@@ -80,7 +80,7 @@
             android:id="@+id/add_item_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_image"
+            android:layout_below="@id/price_layout"
             android:layout_margin="@dimen/edit_text_margin"
             android:text="@string/add_item"/>
     </LinearLayout>

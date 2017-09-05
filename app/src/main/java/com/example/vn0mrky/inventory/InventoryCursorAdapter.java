@@ -42,8 +42,9 @@ public class InventoryCursorAdapter extends CursorAdapter {
 
         String itemName = cursor.getString(nameColumnIndex);
         int quantity = cursor.getInt(quantityIndex);
-        int price = cursor.getInt(priceIndex);
-        String priceString = Integer.toString(price);
+        int priceNumber = cursor.getInt(priceIndex);
+        float price = priceNumber/100;
+        String priceString = Float.toString(price);
         String quantityString = "Price: $" + priceString + " -- In Stock: " + quantity;
 
         if (quantity == 0) {

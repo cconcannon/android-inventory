@@ -21,10 +21,7 @@
         <activity
             android:name=".AddItemActivity"
             android:label="@string/add_item"></activity>
-        <activity
-            android:name=".DetailActivity"
-            android:label="@string/item_details">
-        </activity>
+
         <provider
             android:authorities="com.example.android.inventory"
             android:name=".data.InventoryProvider"
