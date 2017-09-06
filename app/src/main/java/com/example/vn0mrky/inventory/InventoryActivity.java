@@ -106,7 +106,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
     }
 
     private void deleteInventory() {
-        int rowsDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, null, null);
+//        int rowsDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, InventoryEntry.COLUMN_ITEM_NAME, null);
         Toast.makeText(this, R.string.deleted_all, Toast.LENGTH_SHORT).show();
     }
 
