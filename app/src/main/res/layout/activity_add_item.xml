@@ -103,8 +103,7 @@
                 android:layout_margin="@dimen/edit_text_margin"
                 android:layout_toRightOf="@id/price"
                 android:layout_alignBaseline="@id/price"
-                android:hint="0.00"
-                android:inputType="number"/>
+                android:inputType="number" />
         </RelativeLayout>
 
         <Button

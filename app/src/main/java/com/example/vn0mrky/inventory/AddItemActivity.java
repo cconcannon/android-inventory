@@ -105,6 +105,7 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             Toast.makeText(this, R.string.data_error, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, R.string.successful_entry, Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 
@@ -136,13 +137,12 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             String name = data.getString(nameColumnIndex);
             String description = data.getString(descriptionColumnIndex);
             int quantity = data.getInt(quantityColumnIndex);
-            int price100 = data.getInt(priceColumnIndex);
-            double price = price100/100;
+            int price = data.getInt(priceColumnIndex);
 
             mNameEdit.setText(name);
             mDescriptionEdit.setText(description);
             mQuantityEdit.setText(Integer.toString(quantity));
-            mPriceEdit.setText(Double.toString(price));
+            mPriceEdit.setText(Integer.toString(price));
         }
     }
 
