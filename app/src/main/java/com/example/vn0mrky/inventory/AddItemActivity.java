@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Button;
 
 import com.example.vn0mrky.inventory.data.InventoryContract;
 import com.example.vn0mrky.inventory.data.InventoryDbHelper;
@@ -32,6 +33,9 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
     private EditText mDescriptionEdit;
     private EditText mQuantityEdit;
     private EditText mPriceEdit;
+    private Button mSaveButton;
+    private Button mOrderMoreButton;
+    private Button mDeleteButton;
     private boolean mEntryChanged = false;
 
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
@@ -47,20 +51,24 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
+        mNameEdit = (EditText) findViewById(R.id.input_item_name);
+        mDescriptionEdit = (EditText) findViewById(R.id.input_item_description);
+        mQuantityEdit = (EditText) findViewById(R.id.quantity);
+        mPriceEdit = (EditText) findViewById(R.id.price_input);
+        mOrderMoreButton = (Button) findViewById(R.id.order_more_button);
+        mSaveButton = (Button) findViewById(R.id.save_button);
+        mDeleteButton = (Button) findViewById(R.id.delete_button);
+
         Intent intent = getIntent();
         mCurrentItemUri = intent.getData();
 
         if (mCurrentItemUri == null) {
             setTitle("Add Item to Inventory");
+            mDeleteButton.setVisibility(View.INVISIBLE);
         } else {
             setTitle("Edit Existing Item");
             getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
         }
-
-        mNameEdit = (EditText) findViewById(R.id.input_item_name);
-        mDescriptionEdit = (EditText) findViewById(R.id.input_item_description);
-        mQuantityEdit = (EditText) findViewById(R.id.quantity);
-        mPriceEdit = (EditText) findViewById(R.id.price_input);
     }
 
     private void saveItem() {
