@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.Button;
+import android.util.Log;
 
 import com.example.vn0mrky.inventory.data.InventoryContract;
 import com.example.vn0mrky.inventory.data.InventoryDbHelper;
@@ -69,22 +70,35 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             setTitle("Edit Existing Item");
             getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
         }
+
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveItem();
+            }
+        });
     }
 
     private void saveItem() {
+        ContentValues values = new ContentValues();
+
         String nameString = mNameEdit.getText().toString().trim();
         String descriptionString = mDescriptionEdit.getText().toString().trim();
-        int quantity = Integer.parseInt(mQuantityEdit.getText().toString().trim());
-        float priceInput = Float.parseFloat(mPriceEdit.getText().toString().trim());
-        int price = Math.round(priceInput*100);
+        String quantityString = mQuantityEdit.getText().toString().trim();
+        String priceString = mPriceEdit.getText().toString().trim();
 
-        InventoryDbHelper mDbHelper = new InventoryDbHelper(this);
+        if (nameString.length() < 1 || descriptionString.length() < 1 || quantityString.length() < 1 || priceString.length() < 1) {
+            Toast.makeText(this, R.string.data_incomplete, Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            int quantity = Integer.parseInt(mQuantityEdit.getText().toString().trim());
+            int price = Integer.parseInt(mPriceEdit.getText().toString().trim());
 
-        ContentValues values = new ContentValues();
-        values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_NAME, nameString);
-        values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_DESCRIPTION, descriptionString);
-        values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY, quantity);
-        values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE, price);
+            values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_NAME, nameString);
+            values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_DESCRIPTION, descriptionString);
+            values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY, quantity);
+            values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE, price);
+        }
 
         Uri newUri = getContentResolver().insert(InventoryContract.InventoryEntry.CONTENT_URI, values);
         if (newUri == null) {

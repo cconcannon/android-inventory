@@ -61,6 +61,7 @@
                     android:layout_margin="@dimen/edit_text_margin"
                     android:layout_alignBaseline="@id/quantity"
                     android:layout_gravity="center"
+                    android:inputType="number"
                     android:text="1"/>
 
                 <Button
@@ -103,7 +104,7 @@
                 android:layout_toRightOf="@id/price"
                 android:layout_alignBaseline="@id/price"
                 android:hint="0.00"
-                android:inputType="numberDecimal"/>
+                android:inputType="number"/>
         </RelativeLayout>
 
         <Button

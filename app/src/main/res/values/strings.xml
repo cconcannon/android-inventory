@@ -18,6 +18,7 @@
     <string name="deleted_all">Deleted ALL Entries</string>
     <string name="successful_entry">Successful addition to Inventory</string>
     <string name="data_error">Error, data not saved</string>
+    <string name="data_incomplete">Error, not all details are valid</string>
     <string name="delete_from_inventory">Delete from Inventory</string>
     <string name="save_changes">Save Updates to Inventory</string>
     <string name="order_more">Order More</string>
