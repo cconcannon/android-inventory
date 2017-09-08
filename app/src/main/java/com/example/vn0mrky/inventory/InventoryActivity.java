@@ -73,10 +73,6 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
     }
 
-    public void sold_an_item(Uri itemUri) {
-        
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

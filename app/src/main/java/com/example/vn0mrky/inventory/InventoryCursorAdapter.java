@@ -20,7 +20,6 @@ import java.util.Locale;
  */
 
 public class InventoryCursorAdapter extends CursorAdapter {
-    Formatter formatter = new Formatter();
 
     public InventoryCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
@@ -41,10 +40,9 @@ public class InventoryCursorAdapter extends CursorAdapter {
         int priceIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE);
 
         String itemName = cursor.getString(nameColumnIndex);
-        int quantity = cursor.getInt(quantityIndex);
-        int priceNumber = cursor.getInt(priceIndex);
-        float price = priceNumber/100;
-        String priceString = Float.toString(price);
+        final int quantity = cursor.getInt(quantityIndex);
+        int price = cursor.getInt(priceIndex);
+        String priceString = Integer.toString(price);
         String quantityString = "Price: $" + priceString + " -- In Stock: " + quantity;
 
         if (quantity == 0) {
