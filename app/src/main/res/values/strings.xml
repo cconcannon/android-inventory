@@ -24,4 +24,5 @@
     <string name="order_more">Order More</string>
     <string name="error_deleting">Error occurred while attempting to delete</string>
     <string name="successful_delete">Item was deleted from inventory</string>
+    <string name="successful_update">Item was updated</string>
 </resources>

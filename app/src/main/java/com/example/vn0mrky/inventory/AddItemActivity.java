@@ -106,12 +106,22 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE, price);
         }
 
-        Uri newUri = getContentResolver().insert(InventoryContract.InventoryEntry.CONTENT_URI, values);
-        if (newUri == null) {
-            Toast.makeText(this, R.string.data_error, Toast.LENGTH_SHORT).show();
+        if (mCurrentItemUri == null) {
+            Uri newUri = getContentResolver().insert(InventoryContract.InventoryEntry.CONTENT_URI, values);
+            if (newUri == null) {
+                Toast.makeText(this, R.string.data_error, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.successful_entry, Toast.LENGTH_SHORT).show();
+                finish();
+            }
         } else {
-            Toast.makeText(this, R.string.successful_entry, Toast.LENGTH_SHORT).show();
-            finish();
+            int rowsAffected = getContentResolver().update(mCurrentItemUri, values, null, null);
+
+            if (rowsAffected == 0) {
+                Toast.makeText(this, R.string.data_error, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.successful_update, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
