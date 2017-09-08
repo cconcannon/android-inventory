@@ -77,6 +77,12 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
                 saveItem();
             }
         });
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteItem();
+            }
+        });
     }
 
     private void saveItem() {
@@ -107,6 +113,18 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             Toast.makeText(this, R.string.successful_entry, Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    private void deleteItem() {
+        if (mCurrentItemUri != null) {
+            int rowsDeleted = getContentResolver().delete(mCurrentItemUri, null, null);
+            if (rowsDeleted == 0) {
+                Toast.makeText(this, R.string.error_deleting, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.successful_delete, Toast.LENGTH_SHORT).show();
+            }
+        }
+        finish();
     }
 
     @Override
