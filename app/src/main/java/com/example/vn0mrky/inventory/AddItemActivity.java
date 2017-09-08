@@ -38,6 +38,8 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
     private Button mOrderMoreButton;
     private Button mDeleteButton;
     private boolean mEntryChanged = false;
+    private Button mIncreaseButton;
+    private Button mDecreaseButton;
 
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
@@ -59,6 +61,8 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         mOrderMoreButton = (Button) findViewById(R.id.order_more_button);
         mSaveButton = (Button) findViewById(R.id.save_button);
         mDeleteButton = (Button) findViewById(R.id.delete_button);
+        mIncreaseButton = (Button) findViewById(R.id.quantity_increase);
+        mDecreaseButton = (Button) findViewById(R.id.quantity_decrease);
 
         Intent intent = getIntent();
         mCurrentItemUri = intent.getData();
@@ -83,6 +87,35 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
                 deleteItem();
             }
         });
+        mIncreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                increaseQuantity();
+            }
+        });
+        mDecreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                decreaseQuantity();
+            }
+        });
+    }
+
+    private void increaseQuantity() {
+        int qty = Integer.parseInt(mQuantityEdit.getText().toString());
+        qty ++;
+        mQuantityEdit.setText("" + qty);
+    }
+
+    private void decreaseQuantity() {
+        int qty = Integer.parseInt(mQuantityEdit.getText().toString());
+        if (qty <= 0) {
+            Toast.makeText(this, R.string.quantity_not_negative, Toast.LENGTH_SHORT).show();
+            qty = 0;
+        } else {
+            qty --;
+        }
+        mQuantityEdit.setText("" + qty);
     }
 
     private void saveItem() {
@@ -98,6 +131,9 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             return;
         } else {
             int quantity = Integer.parseInt(mQuantityEdit.getText().toString().trim());
+            if (quantity < 0) {
+                quantity = 0;
+            }
             int price = Integer.parseInt(mPriceEdit.getText().toString().trim());
 
             values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_NAME, nameString);
@@ -121,6 +157,7 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
                 Toast.makeText(this, R.string.data_error, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, R.string.successful_update, Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }
