@@ -84,7 +84,7 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteItem();
+                deleteConfirmation();
             }
         });
         mIncreaseButton.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +160,28 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
                 finish();
             }
         }
+    }
+
+    private void deleteConfirmation() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_confirmation);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteItem();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (dialogInterface != null) {
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void deleteItem() {
