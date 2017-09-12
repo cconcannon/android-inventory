@@ -68,6 +68,12 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         mIncreaseButton = (Button) findViewById(R.id.quantity_increase);
         mDecreaseButton = (Button) findViewById(R.id.quantity_decrease);
 
+        mNameEdit.setOnTouchListener(mTouchListener);
+        mDescriptionEdit.setOnTouchListener(mTouchListener);
+        mQuantityEdit.setOnTouchListener(mTouchListener);
+        mPriceEdit.setOnTouchListener(mTouchListener);
+        mEmailEdit.setOnTouchListener(mTouchListener);
+
         Intent intent = getIntent();
         mCurrentItemUri = intent.getData();
 
@@ -102,6 +108,12 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             @Override
             public void onClick(View view) {
                 decreaseQuantity();
+            }
+        });
+        mOrderMoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendEmail();
             }
         });
     }
@@ -201,6 +213,14 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             }
         }
         finish();
+    }
+
+    private void sendEmail() {
+        String address = mEmailEdit.getText().toString().trim();
+        String productName = mNameEdit.getText().toString().trim();
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", address, null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, R.string.order_request_for + productName);
+        startActivity(Intent.createChooser(intent, ""));
     }
 
     @Override
