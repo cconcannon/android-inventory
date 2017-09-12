@@ -34,6 +34,8 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
     private EditText mDescriptionEdit;
     private EditText mQuantityEdit;
     private EditText mPriceEdit;
+    private EditText mEmailEdit;
+    private Button mImageButton;
     private Button mSaveButton;
     private Button mOrderMoreButton;
     private Button mDeleteButton;
@@ -58,7 +60,9 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         mDescriptionEdit = (EditText) findViewById(R.id.input_item_description);
         mQuantityEdit = (EditText) findViewById(R.id.quantity);
         mPriceEdit = (EditText) findViewById(R.id.price_input);
+        mEmailEdit = (EditText) findViewById(R.id.email_input);
         mOrderMoreButton = (Button) findViewById(R.id.order_more_button);
+        mImageButton = (Button) findViewById(R.id.image_button);
         mSaveButton = (Button) findViewById(R.id.save_button);
         mDeleteButton = (Button) findViewById(R.id.delete_button);
         mIncreaseButton = (Button) findViewById(R.id.quantity_increase);
@@ -70,6 +74,7 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         if (mCurrentItemUri == null) {
             setTitle("Add Item to Inventory");
             mDeleteButton.setVisibility(View.INVISIBLE);
+            mOrderMoreButton.setVisibility(View.INVISIBLE);
         } else {
             setTitle("Edit Existing Item");
             getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
@@ -125,8 +130,9 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         String descriptionString = mDescriptionEdit.getText().toString().trim();
         String quantityString = mQuantityEdit.getText().toString().trim();
         String priceString = mPriceEdit.getText().toString().trim();
+        String emailString = mEmailEdit.getText().toString().trim();
 
-        if (nameString.length() < 1 || descriptionString.length() < 1 || quantityString.length() < 1 || priceString.length() < 1) {
+        if (nameString.length() < 1 || descriptionString.length() < 1 || quantityString.length() < 1 || priceString.length() < 1 || emailString.length() < 1) {
             Toast.makeText(this, R.string.data_incomplete, Toast.LENGTH_SHORT).show();
             return;
         } else {
