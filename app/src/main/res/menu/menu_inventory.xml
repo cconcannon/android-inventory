@@ -9,13 +9,4 @@
         android:id="@+id/action_insert_dummy_data"
         android:title="@string/insert_dummy_data"
         app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_delete_all_entries"
-        android:title="@string/delete_all"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
 </menu>

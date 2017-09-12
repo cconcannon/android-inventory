@@ -30,12 +30,12 @@ public class InventoryCursorAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, Context context, final Cursor cursor) {
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
         TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
-        Button soldButton = (Button) view.findViewById(R.id.sold_button);
+        final Button soldButton = (Button) view.findViewById(R.id.sold_button);
 
-        int nameColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_NAME);
+        final int nameColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_NAME);
         int quantityIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY);
         int priceIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE);
 
@@ -47,6 +47,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
 
         if (quantity == 0) {
             soldButton.setVisibility(View.INVISIBLE);
+        } else {
         }
 
         nameTextView.setText(itemName);
