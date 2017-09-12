@@ -13,7 +13,7 @@ import com.example.vn0mrky.inventory.data.InventoryContract.InventoryEntry;
 public class InventoryDbHelper extends SQLiteOpenHelper {
     public static final String LOG_TAG = InventoryDbHelper.class.getSimpleName();
 
-    private static final String DATABASE_NAME = "warehouse.db";
+    private static final String DATABASE_NAME = "warehouseInventory.db";
 
     private static final int DATABASE_VERSION = 1;
 
@@ -34,7 +34,8 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
                 + InventoryEntry.COLUMN_ITEM_NAME + " TEXT NOT NULL, "
                 + InventoryEntry.COLUMN_ITEM_DESCRIPTION + " TEXT, "
                 + InventoryEntry.COLUMN_ITEM_QUANTITY + " INTEGER NOT NULL DEFAULT 0 CHECK (" + InventoryEntry.COLUMN_ITEM_QUANTITY + " >= 0), "
-                + InventoryEntry.COLUMN_ITEM_PRICE + " INTEGER NOT NULL DEFAULT 0 CHECK (" + InventoryEntry.COLUMN_ITEM_PRICE + " >= 0));";
+                + InventoryEntry.COLUMN_ITEM_PRICE + " INTEGER NOT NULL DEFAULT 0 CHECK (" + InventoryEntry.COLUMN_ITEM_PRICE + " >= 0), "
+                + InventoryEntry.COLUMN_ITEM_SUPPLIER_EMAIL + " TEXT NOT NULL);";
 
         db.execSQL(SQL_CREATE_INVENTORY_TABLE);
     }

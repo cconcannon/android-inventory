@@ -146,6 +146,7 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_DESCRIPTION, descriptionString);
             values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY, quantity);
             values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE, price);
+            values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_SUPPLIER_EMAIL, emailString);
         }
 
         if (mCurrentItemUri == null) {
@@ -209,7 +210,8 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
                 InventoryContract.InventoryEntry.COLUMN_ITEM_NAME,
                 InventoryContract.InventoryEntry.COLUMN_ITEM_DESCRIPTION,
                 InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY,
-                InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE
+                InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE,
+                InventoryContract.InventoryEntry.COLUMN_ITEM_SUPPLIER_EMAIL
         };
 
         return new CursorLoader(this, mCurrentItemUri, projection, null, null, null);
@@ -226,16 +228,19 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             int descriptionColumnIndex = data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_DESCRIPTION);
             int quantityColumnIndex = data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY);
             int priceColumnIndex = data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE);
+            int supplierEmailColumnIndex = data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_SUPPLIER_EMAIL);
 
             String name = data.getString(nameColumnIndex);
             String description = data.getString(descriptionColumnIndex);
             int quantity = data.getInt(quantityColumnIndex);
             int price = data.getInt(priceColumnIndex);
+            String supplierEmail = data.getString(supplierEmailColumnIndex);
 
             mNameEdit.setText(name);
             mDescriptionEdit.setText(description);
             mQuantityEdit.setText(Integer.toString(quantity));
             mPriceEdit.setText(Integer.toString(price));
+            mEmailEdit.setText(supplierEmail);
         }
     }
 
@@ -245,5 +250,6 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         mDescriptionEdit.setText("");
         mPriceEdit.setText("");
         mQuantityEdit.setText("");
+        mEmailEdit.setText("");
     }
 }
