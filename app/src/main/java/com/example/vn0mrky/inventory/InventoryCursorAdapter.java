@@ -5,26 +5,20 @@ import android.content.Context;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.database.Cursor;
-import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.example.vn0mrky.inventory.data.InventoryContract;
-
-import java.util.Locale;
 
 /**
  * Created by cconcannon on 8/26/17.
  */
 
 public class InventoryCursorAdapter extends CursorAdapter {
-
-    private QuickSale saleListener;
 
     public InventoryCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);

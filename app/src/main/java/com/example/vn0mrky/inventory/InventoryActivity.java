@@ -21,7 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.example.vn0mrky.inventory.data.InventoryContract.InventoryEntry;
 
-public class InventoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, QuickSale {
+public class InventoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int INVENTORY_LOADER = 0;
 
     InventoryCursorAdapter mCursorAdapter;
@@ -119,10 +119,5 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mCursorAdapter.swapCursor(null);
-    }
-
-    @Override
-    public void sellItem() {
-
     }
 }
