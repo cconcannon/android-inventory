@@ -11,9 +11,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.vn0mrky.inventory.QuickSale;
+
 /**
  * Created by cconcannon on 8/26/17.
  */
+
 
 public class InventoryProvider extends ContentProvider {
     public static final String LOG_TAG = InventoryProvider.class.getSimpleName();

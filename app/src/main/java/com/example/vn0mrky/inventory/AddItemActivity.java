@@ -219,7 +219,8 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         String address = mEmailEdit.getText().toString().trim();
         String productName = mNameEdit.getText().toString().trim();
         Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", address, null));
-        intent.putExtra(Intent.EXTRA_SUBJECT, R.string.order_request_for + productName);
+        String emailSubject = getString(R.string.order_request_for) + " " + productName;
+        intent.putExtra(Intent.EXTRA_SUBJECT, emailSubject);
         startActivity(Intent.createChooser(intent, ""));
     }
 
