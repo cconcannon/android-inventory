@@ -20,7 +20,8 @@
         </activity>
         <activity
             android:name=".AddItemActivity"
-            android:label="@string/add_item"></activity>
+            android:label="@string/add_item">
+        </activity>
 
         <provider
             android:authorities="com.example.android.inventory"

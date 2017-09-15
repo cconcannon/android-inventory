@@ -1,5 +1,6 @@
 package com.example.vn0mrky.inventory;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -8,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -17,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -27,9 +31,18 @@ import android.util.Log;
 import com.example.vn0mrky.inventory.data.InventoryContract;
 import com.example.vn0mrky.inventory.data.InventoryDbHelper;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class AddItemActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int EXISTING_ITEM_LOADER = 0;
+    private static final int PICK_IMAGE_REQUEST = 0;
+    private static final String STATE_URI = "STATE_URI";
+    private static final String LOG_TAG = AddItemActivity.class.getSimpleName();
+
     private Uri mCurrentItemUri;
+    private Uri mImageUri;
     private EditText mNameEdit;
     private EditText mDescriptionEdit;
     private EditText mQuantityEdit;
@@ -42,6 +55,7 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
     private boolean mEntryChanged = false;
     private Button mIncreaseButton;
     private Button mDecreaseButton;
+    private ImageView mImageView;
 
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
@@ -62,6 +76,7 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         mPriceEdit = (EditText) findViewById(R.id.price_input);
         mEmailEdit = (EditText) findViewById(R.id.email_input);
         mOrderMoreButton = (Button) findViewById(R.id.order_more_button);
+        mImageView = (ImageView) findViewById(R.id.item_image);
         mImageButton = (Button) findViewById(R.id.image_button);
         mSaveButton = (Button) findViewById(R.id.save_button);
         mDeleteButton = (Button) findViewById(R.id.delete_button);
@@ -114,6 +129,12 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             @Override
             public void onClick(View view) {
                 sendEmail();
+            }
+        });
+        mImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openImageSelector();
             }
         });
     }
@@ -181,6 +202,13 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         }
     }
 
+    public void openImageSelector() {
+        Intent intent = new Intent (Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        startActivityForResult(intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
     private void deleteConfirmation() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.delete_confirmation);
@@ -222,6 +250,60 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         String emailSubject = getString(R.string.order_request_for) + " " + productName;
         intent.putExtra(Intent.EXTRA_SUBJECT, emailSubject);
         startActivity(Intent.createChooser(intent, ""));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            if (resultData != null) {
+                mImageUri = resultData.getData();
+                mImageView.setImageBitmap(getBitmapFromUri(mImageUri));
+            }
+        }
+    }
+
+    public Bitmap getBitmapFromUri(Uri uri) {
+        if (uri == null || uri.toString().isEmpty()) {
+            return null;
+        }
+
+        InputStream input = null;
+
+        try {
+            input = this.getContentResolver().openInputStream(uri);
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(input, null, bmOptions);
+            input.close();
+
+            int targetW = mImageView.getWidth();
+            int targetH = mImageView.getHeight();
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+
+            input = this.getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(input, null, bmOptions);
+            input.close();
+
+            return bitmap;
+
+        } catch (FileNotFoundException fne) {
+            Log.e(LOG_TAG, "Failed to load image", fne);
+            return null;
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Failed to load image", e);
+            return null;
+        } finally {
+            try {
+                input.close();
+            } catch (IOException ioe) {
+                Log.e(LOG_TAG, "IO Exception", ioe);
+            }
+        }
     }
 
     @Override
