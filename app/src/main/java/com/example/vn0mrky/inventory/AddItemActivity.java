@@ -164,6 +164,12 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         String quantityString = mQuantityEdit.getText().toString().trim();
         String priceString = mPriceEdit.getText().toString().trim();
         String emailString = mEmailEdit.getText().toString().trim();
+        String imageUriString;
+        if (mImageUri == null) {
+            imageUriString = "";
+        } else {
+            imageUriString = mImageUri.toString();
+        }
 
         if (nameString.length() < 1 || descriptionString.length() < 1 || quantityString.length() < 1 || priceString.length() < 1 || emailString.length() < 1) {
             Toast.makeText(this, R.string.data_incomplete, Toast.LENGTH_SHORT).show();
@@ -180,6 +186,7 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY, quantity);
             values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE, price);
             values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_SUPPLIER_EMAIL, emailString);
+            values.put(InventoryContract.InventoryEntry.COLUMN_ITEM_IMAGE_URI, imageUriString);
         }
 
         if (mCurrentItemUri == null) {
@@ -314,7 +321,8 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
                 InventoryContract.InventoryEntry.COLUMN_ITEM_DESCRIPTION,
                 InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY,
                 InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE,
-                InventoryContract.InventoryEntry.COLUMN_ITEM_SUPPLIER_EMAIL
+                InventoryContract.InventoryEntry.COLUMN_ITEM_SUPPLIER_EMAIL,
+                InventoryContract.InventoryEntry.COLUMN_ITEM_IMAGE_URI
         };
 
         return new CursorLoader(this, mCurrentItemUri, projection, null, null, null);
@@ -332,18 +340,27 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
             int quantityColumnIndex = data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_QUANTITY);
             int priceColumnIndex = data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_PRICE);
             int supplierEmailColumnIndex = data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_SUPPLIER_EMAIL);
+            int imageUriColumnIndex = data.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_ITEM_IMAGE_URI);
 
             String name = data.getString(nameColumnIndex);
             String description = data.getString(descriptionColumnIndex);
             int quantity = data.getInt(quantityColumnIndex);
             int price = data.getInt(priceColumnIndex);
             String supplierEmail = data.getString(supplierEmailColumnIndex);
+            String imageUriString = data.getString(imageUriColumnIndex);
 
             mNameEdit.setText(name);
             mDescriptionEdit.setText(description);
             mQuantityEdit.setText(Integer.toString(quantity));
             mPriceEdit.setText(Integer.toString(price));
             mEmailEdit.setText(supplierEmail);
+            if (imageUriString == null || imageUriString.isEmpty()) {
+                mImageView.setImageResource(R.drawable.no_image);
+            } else {
+                mImageUri = Uri.parse(imageUriString);
+                Bitmap imageBitmap = getBitmapFromUri(mImageUri);
+                mImageView.setImageBitmap(imageBitmap);
+            }
         }
     }
 
@@ -354,5 +371,6 @@ public class AddItemActivity extends AppCompatActivity implements LoaderManager.
         mPriceEdit.setText("");
         mQuantityEdit.setText("");
         mEmailEdit.setText("");
+        mImageView.setImageResource(R.drawable.no_image);
     }
 }
